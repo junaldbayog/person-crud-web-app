@@ -15,7 +15,7 @@ public class DatabaseUtil {
 		if(connection != null) {
 			return connection;
 		}
-		InputStream inputStream = DatabaseUtil.class.getClassLoader().getResourceAsStream("/database.properties");
+		InputStream inputStream = DatabaseUtil.class.getClass().getResourceAsStream("/database.properties");
 		Properties properties = new Properties();
 		try {
 			properties.load(inputStream);
