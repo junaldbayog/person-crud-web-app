@@ -14,18 +14,20 @@ public class PersonDAOImpl implements PersonDAO {
 	
 	private Connection connection;
 	
-	public PersonDAOImpl(Connection connection) {
+	public PersonDAOImpl() {
 		this.connection = DatabaseUtil.getConnection();
 	}
 
 	public void savePerson(Person newPerson) {
 		try {
-			String query = "INSERT INTO person (firstName, lastName, gender, birthDate) values (?, ?, ?, ?)";
+			String query = "INSERT INTO person (id, firstName, lastName, gender, birthDate) values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, newPerson.getFirstName());
-			preparedStatement.setString(2, newPerson.getLastName());
-			preparedStatement.setString(3, String.valueOf(newPerson.getGender()));
-			preparedStatement.setDate(4, new Date(DateUtils.asDate(newPerson.getBirthDate()).getTime()));
+			preparedStatement.setLong(1, newPerson.getId());
+			preparedStatement.setString(2, newPerson.getFirstName());
+			preparedStatement.setString(3, newPerson.getLastName());
+			preparedStatement.setString(4, String.valueOf(newPerson.getGender()));
+			preparedStatement.setDate(5, new Date(DateUtils.asDate(newPerson.getBirthDate()).getTime()));
+			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("Problem inserting person.", e);
 		}
