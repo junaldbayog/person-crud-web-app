@@ -28,13 +28,22 @@ public class PersonDAOImpl implements PersonDAO {
 			preparedStatement.setString(4, String.valueOf(newPerson.getGender()));
 			preparedStatement.setDate(5, new Date(DateUtils.asDate(newPerson.getBirthDate()).getTime()));
 			preparedStatement.executeUpdate();
+			preparedStatement.close();
 		} catch (SQLException e) {
 			throw new RuntimeException("Problem inserting person.", e);
 		}
 	}
 
 	public void deletePerson(long id) {
-		// TODO Implementation
+		try {
+			String query = "DELETE FROM person WHERE id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setLong(1, id);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new RuntimeException("Problem deleting person.", e);
+		}
 	}
 
 	public void updatePerson(Person toBeUpdated) {
