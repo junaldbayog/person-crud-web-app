@@ -3,9 +3,13 @@ package com.lexim.dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.lexim.model.Gender;
 import com.lexim.model.Person;
 import com.lexim.util.DatabaseUtil;
 import com.lexim.util.DateUtils;
@@ -51,8 +55,24 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 
 	public List<Person> getAllPersons() {
-		// TODO Implementation
-		return null;
+		List<Person> persons = new ArrayList<Person>();
+		try {
+			String query = "SELECT * from person";
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()) {
+				long id = resultSet.getLong("id");
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				Date birthDate = resultSet.getDate("birthDate");
+				Gender gender = Gender.valueOf(resultSet.getString("gender"));
+				Person person = new Person(id, firstName, lastName, DateUtils.asLocalDate(new java.util.Date(birthDate.getTime())), gender);
+				persons.add(person);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Problem getting all persons.");
+		}
+		return persons;
 	}
 
 	public Person getPersonById(long id) {
