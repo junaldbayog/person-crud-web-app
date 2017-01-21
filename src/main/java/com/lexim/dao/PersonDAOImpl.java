@@ -51,7 +51,19 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 
 	public void updatePerson(Person toBeUpdated) {
-		// TODO Implementation
+		try {
+			final String query = "UPDATE person SET firstName = ?, lastName = ?, gender = ?, birthDate = ?  WHERE id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, toBeUpdated.getFirstName());
+			preparedStatement.setString(2, toBeUpdated.getLastName());
+			preparedStatement.setString(3, toBeUpdated.getGender().toString());
+			preparedStatement.setDate(4, new Date(DateUtils.asDate(toBeUpdated.getBirthDate()).getTime()));
+			preparedStatement.setLong(5, toBeUpdated.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch(SQLException e) {
+			throw new RuntimeException("Problem updating person.", e);
+		}
 	}
 
 	public List<Person> getAllPersons() {
