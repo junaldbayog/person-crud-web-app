@@ -1,4 +1,4 @@
-package com.lexim.model;
+package com.codefries.model;
 
 public enum Gender {
 	MALE, FEMALE;

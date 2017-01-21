@@ -1,4 +1,4 @@
-package com.lexim.util;
+package com.codefries.util;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

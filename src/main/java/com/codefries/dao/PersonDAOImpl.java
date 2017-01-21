@@ -1,4 +1,4 @@
-package com.lexim.dao;
+package com.codefries.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,10 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lexim.model.Gender;
-import com.lexim.model.Person;
-import com.lexim.util.DatabaseUtil;
-import com.lexim.util.DateUtils;
+import com.codefries.model.Gender;
+import com.codefries.model.Person;
+import com.codefries.util.DatabaseUtil;
+import com.codefries.util.DateUtils;
 
 public class PersonDAOImpl implements PersonDAO {
 	

@@ -1,8 +1,8 @@
-package com.lexim.console;
+package com.codefries.console;
 
 import java.sql.Connection;
 
-import com.lexim.util.DatabaseUtil;
+import com.codefries.util.DatabaseUtil;
 
 public class DatabaseConnectionTester {
 	

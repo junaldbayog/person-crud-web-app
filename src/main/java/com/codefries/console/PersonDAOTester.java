@@ -1,12 +1,12 @@
-package com.lexim.console;
+package com.codefries.console;
 
 import java.time.LocalDate;
 import java.time.Month;
 
-import com.lexim.dao.PersonDAO;
-import com.lexim.dao.PersonDAOImpl;
-import com.lexim.model.Gender;
-import com.lexim.model.Person;
+import com.codefries.dao.PersonDAO;
+import com.codefries.dao.PersonDAOImpl;
+import com.codefries.model.Gender;
+import com.codefries.model.Person;
 
 public class PersonDAOTester {
 

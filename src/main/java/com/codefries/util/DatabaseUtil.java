@@ -1,4 +1,4 @@
-package com.lexim.util;
+package com.codefries.util;
 
 import java.io.IOException;
 import java.io.InputStream;

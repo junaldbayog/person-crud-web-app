@@ -1,8 +1,8 @@
-package com.lexim.dao;
+package com.codefries.dao;
 
 import java.util.List;
 
-import com.lexim.model.Person;
+import com.codefries.model.Person;
 
 public interface PersonDAO {
 	

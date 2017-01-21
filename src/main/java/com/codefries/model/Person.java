@@ -1,4 +1,4 @@
-package com.lexim.model;
+package com.codefries.model;
 
 import java.time.LocalDate;
 
