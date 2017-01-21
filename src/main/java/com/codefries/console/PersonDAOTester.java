@@ -25,5 +25,8 @@ public class PersonDAOTester {
 		
 		personDAO.updatePerson(new Person(1, "Junald", "Bayog", LocalDate.of(1996, Month.APRIL, 12), Gender.MALE));
 		System.out.println("Person updated successfully.");
+		
+		Person personFetched = personDAO.getPersonById(1);
+		System.out.println("Person fetched from db: " + personFetched);
 	}
 }

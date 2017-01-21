@@ -24,7 +24,7 @@ public class PersonDAOImpl implements PersonDAO {
 
 	public void savePerson(Person newPerson) {
 		try {
-			String query = "INSERT INTO person (id, firstName, lastName, gender, birthDate) values (?, ?, ?, ?, ?)";
+			String query = "INSERT INTO person (id, firstName, lastName, gender, birthDate) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setLong(1, newPerson.getId());
 			preparedStatement.setString(2, newPerson.getFirstName());
@@ -34,7 +34,7 @@ public class PersonDAOImpl implements PersonDAO {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch (SQLException e) {
-			throw new RuntimeException("Problem inserting person.", e);
+			throw new RuntimeException("Error inserting person.", e);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class PersonDAOImpl implements PersonDAO {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch (SQLException e) {
-			throw new RuntimeException("Problem deleting person.", e);
+			throw new RuntimeException("Error deleting person.", e);
 		}
 	}
 
@@ -62,14 +62,14 @@ public class PersonDAOImpl implements PersonDAO {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch(SQLException e) {
-			throw new RuntimeException("Problem updating person.", e);
+			throw new RuntimeException("Error updating person.", e);
 		}
 	}
 
 	public List<Person> getAllPersons() {
 		List<Person> persons = new ArrayList<Person>();
 		try {
-			String query = "SELECT * from person";
+			String query = "SELECT * FROM person";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while(resultSet.next()) {
@@ -82,13 +82,30 @@ public class PersonDAOImpl implements PersonDAO {
 				persons.add(person);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Problem getting all persons.");
+			throw new RuntimeException("Error getting all persons.");
 		}
 		return persons;
 	}
 
 	public Person getPersonById(long id) {
-		// TODO Implementation
-		return null;
+		Person person = Person.EMPTY;
+		try {
+			final String query = "SELECT * FROM person WHERE id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setLong(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				person = new Person(id);
+				person.setFirstName(resultSet.getString("firstName"));
+				person.setLastName(resultSet.getString("lastName"));
+				person.setGender(Gender.valueOf(resultSet.getString("gender")));
+				person.setBirthDate(DateUtils.asLocalDate(new java.util.Date(resultSet.getDate("birthDate").getTime())));
+			}
+			resultSet.close();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new RuntimeException("Error getting person with id " + id, e);
+		}
+		return person;
 	}
 }

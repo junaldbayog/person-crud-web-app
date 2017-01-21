@@ -13,6 +13,12 @@ public class Person {
 	private Gender gender;
 
 	private LocalDate birthDate;
+	
+	public static final Person EMPTY = new Person(0);
+	
+	public Person(long id) {
+		this.id = id;
+	}
 
 	public Person(long id, String firstName, String lastName, LocalDate birthDate, Gender gender) {
 		this.id = id;
